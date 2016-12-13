@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Footer from './jsx/Layout/Footer';
 import logoLarger from './img/logo-larger.png';
 import OEMConfig from './Config';
@@ -7,14 +7,22 @@ import Bazel from 'components/Dashboard/Bazel';
 import BaseInfo from 'components/Dashboard/BaseInfo';
 import Licensed from 'components/Dashboard/Licensed';
 
+import './sass/login.scss';
+
 // import { Grid, Row, Col, Panel, Button } from 'react-bootstrap';
 
 class Login extends React.Component {
 
+  static contextTypes = {
+    appConfig: PropTypes.shape({
+      OEM: PropTypes.string.isRequired,
+      MODULE_NAME: PropTypes.string.isRequired
+    })
+  }
+
   render() {
-    // FIXME
-    const moduleName = 'th3030s';
-    const bazelUrl = require(`./img/bazel_templates/${moduleName}.svg`);
+    const { appConfig: { MODULE_NAME } } = this.context;
+    const bazelUrl = require(`./img/bazel_templates/${MODULE_NAME}.svg`);
 
     return (
       <div id="login-layout">
@@ -40,7 +48,7 @@ class Login extends React.Component {
               <label>
                 <span className="glyphicon glyphicon-bookmark"></span>Thunder 3030s
               </label>
-              <Bazel url={bazelUrl} logo={OEMConfig.logo} posMapping={OEMConfig.logoPosMapping[moduleName]} />
+              <Bazel url={bazelUrl} logo={OEMConfig.logo} posMapping={OEMConfig.logoPosMapping[MODULE_NAME]} />
             </div>
             <div className="baseinfo-container">
               <label>Basic Info</label>
